@@ -1,0 +1,63 @@
+<html>
+<body>
+<pre>
+Hello VM.
+
+## 你看不到我
+
+#*
+这里都看不到
+*#
+
+    ##这是velicity的注释，不带！的说明不为空就不输出
+value1:$!{value1}
+    $!{value2}
+    ${value3}
+
+    ##输出list和Map
+    #foreach ($color in $colors)
+        Color $!{foreach.index}/$!{foreach.count}: $!{color}
+    #end
+
+    #foreach($key in $map.keySet())
+        Number $!{foreach.index}/$!{foreach.count}: $!{key} $map.get($key)
+    #end
+
+    ##返回key-value结合的键对
+    #foreach($kv in $map.entrySet())
+        Number $!{foreach.index}/$!{foreach.count}: $!{kv.key} $!{kv.value}
+    #end
+
+
+User:$!{user.name}
+User:$!{user.getName()}
+
+    ##模板继承
+    ##include只是将代码引入，但是parse会解析
+    #set($title = "nowcoder")
+Include: #include("header.vm") <br>
+Parse:#parse("header.vm")
+
+    ##方法引用
+    #macro (render_color, $color, $index)
+        Color By Macro $index, $color
+    #end
+
+    #foreach ($color in $colors)
+        #render_color($color, $foreach.index)
+    #end
+    ##方法引用结束
+
+    ##双引号会解析数据，而单引号不会
+    #set($hello = "hello")
+    #set($hworld1 = "$!{hello} world")
+    #set($hworld2 = '$!{hello} world')
+
+hworld1:$hworld1
+hworld2:$hworld2
+
+    $!{colors.size()}
+
+</pre>
+</body>
+</html>
