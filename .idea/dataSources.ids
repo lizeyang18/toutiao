@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - toutiao@localhost" uuid="48747aa9-3073-4d45-9596-8e9a515bb1a9">
+    <database-info product="MySQL" version="5.7.17-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.47 ( Revision: fe1903b1ecb4a96a917f7ed3190d80c049b1de29 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.4">
+      <schema id="1" name="toutiao"/>
+      <table id="2" parent="1" name="user">
+        <comment>用户表</comment>
+      </table>
+      <column id="3" parent="2" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="4" parent="2" name="name">
+        <data-type>varchar(64)</data-type>
+      </column>
+      <column id="5" parent="2" name="password">
+        <data-type>varchar(64)</data-type>
+      </column>
+      <index id="6" parent="2" name="name_UNIQUE">
+        <columns>name</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <key id="7" parent="2" name="name_UNIQUE">
+        <columns>name</columns>
+        <underlying-index>name_UNIQUE</underlying-index>
+      </key>
+      <key id="8" parent="2" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+    </database-model>
+  </data-source>
+</component>
