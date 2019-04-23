@@ -8,29 +8,115 @@
     <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <database-model serializer="dbm" rdbms="MYSQL" format-version="2.4">
       <schema id="1" name="toutiao"/>
-      <table id="2" parent="1" name="user">
-        <comment>用户表</comment>
-      </table>
-      <column id="3" parent="2" name="id">
+      <table id="2" parent="1" name="user"/>
+      <table id="3" parent="1" name="login_ticket"/>
+      <table id="4" parent="1" name="news"/>
+      <column id="5" parent="2" name="id">
         <mandatory>1</mandatory>
-        <data-type>int(11)</data-type>
+        <data-type>int(11) unsigned</data-type>
       </column>
-      <column id="4" parent="2" name="name">
+      <column id="6" parent="2" name="name">
+        <mandatory>1</mandatory>
         <data-type>varchar(64)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
       </column>
-      <column id="5" parent="2" name="password">
-        <data-type>varchar(64)</data-type>
+      <column id="7" parent="2" name="password">
+        <mandatory>1</mandatory>
+        <data-type>varchar(128)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
       </column>
-      <index id="6" parent="2" name="name_UNIQUE">
+      <column id="8" parent="2" name="salt">
+        <mandatory>1</mandatory>
+        <data-type>varchar(32)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="9" parent="2" name="head_url">
+        <mandatory>1</mandatory>
+        <data-type>varchar(256)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <index id="10" parent="2" name="name">
         <columns>name</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <key id="7" parent="2" name="name_UNIQUE">
+      <key id="11" parent="2" name="name">
         <columns>name</columns>
-        <underlying-index>name_UNIQUE</underlying-index>
+        <underlying-index>name</underlying-index>
       </key>
-      <key id="8" parent="2" name="PRIMARY">
+      <key id="12" parent="2" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="13" parent="3" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="14" parent="3" name="user_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="15" parent="3" name="ticket">
+        <mandatory>1</mandatory>
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="16" parent="3" name="expired">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="17" parent="3" name="status">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <index id="18" parent="3" name="ticket_UNIQUE">
+        <columns>ticket</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <key id="19" parent="3" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <key id="20" parent="3" name="ticket_UNIQUE">
+        <columns>ticket</columns>
+        <underlying-index>ticket_UNIQUE</underlying-index>
+      </key>
+      <column id="21" parent="4" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(11) unsigned</data-type>
+      </column>
+      <column id="22" parent="4" name="title">
+        <mandatory>1</mandatory>
+        <data-type>varchar(128)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="23" parent="4" name="link">
+        <mandatory>1</mandatory>
+        <data-type>varchar(256)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="24" parent="4" name="image">
+        <mandatory>1</mandatory>
+        <data-type>varchar(256)</data-type>
+        <default-expression>&apos;&apos;</default-expression>
+      </column>
+      <column id="25" parent="4" name="like_count">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="26" parent="4" name="comment_count">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="27" parent="4" name="created_date">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="28" parent="4" name="user_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <key id="29" parent="4" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>

@@ -1,7 +1,9 @@
 package com.nowcoder;
 
+import com.nowcoder.dao.LoginTicketDAO;
 import com.nowcoder.dao.NewsDAO;
 import com.nowcoder.dao.UserDAO;
+import com.nowcoder.model.LoginTicket;
 import com.nowcoder.model.News;
 import com.nowcoder.model.User;
 import org.junit.Assert;
@@ -29,6 +31,9 @@ public class InitDatabaseTests {
 	@Autowired
 	NewsDAO newsDAO;
 
+	@Autowired
+	LoginTicketDAO loginTicketDAO;
+
 	@Test
 	public void initData() {
 		Random random = new Random();
@@ -54,12 +59,24 @@ public class InitDatabaseTests {
 
 			user.setPassword("newpassword");
 			userDAO.updatePassword(user);
+
+			LoginTicket ticket = new LoginTicket();
+			ticket.setStatus(0);
+			ticket.setUserId(i+1);
+			ticket.setExpired(date);
+			ticket.setTicket(String.format("TICKET%d",i+1));
+			loginTicketDAO.addTicket(ticket);
+
+			loginTicketDAO.updateStatus(ticket.getTicket(),2);
 		}
 
 		//判断密码是否正确
 		Assert.assertEquals("newpassword",userDAO.selectById(1).getPassword());
 		userDAO.deleteById(1);  //这里删除id为1的用户
 		Assert.assertNull(userDAO.selectById(1));
+
+		Assert.assertEquals(1,loginTicketDAO.selectByTicket("TICKET1").getUserId());
+		Assert.assertEquals(2,loginTicketDAO.selectByTicket("TICKET1").getStatus());
 	}
 
 }
