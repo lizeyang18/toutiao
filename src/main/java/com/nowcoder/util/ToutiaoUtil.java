@@ -14,6 +14,22 @@ import java.util.Map;
 public class ToutiaoUtil{
     private static final Logger logger = LoggerFactory.getLogger(ToutiaoUtil.class);
 
+    //判断文件是否允许上传,fileExt为拓展名
+    //TOUTIAO_DOMAIN是前缀
+
+    public static String TOUTIAO_DOMAIN = "http://127.0.0.1:8080/";
+    public static String IMAGE_DIR = "D:/IDEA/Projects/upload/";
+    public static String[] IMAGE_FILE_EXT = new String[] {"png","bmp","jpg","jpeg"};
+
+    public static boolean isFileAllowed(String fileExt){
+        for(String ext: IMAGE_FILE_EXT){
+            if(ext.equals(fileExt)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static String getJSONString(int code) {
         JSONObject json = new JSONObject();
         json.put("code", code);
