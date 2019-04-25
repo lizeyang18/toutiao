@@ -1,11 +1,7 @@
 package com.nowcoder;
 
-import com.nowcoder.dao.LoginTicketDAO;
-import com.nowcoder.dao.NewsDAO;
-import com.nowcoder.dao.UserDAO;
-import com.nowcoder.model.LoginTicket;
-import com.nowcoder.model.News;
-import com.nowcoder.model.User;
+import com.nowcoder.dao.*;
+import com.nowcoder.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +30,12 @@ public class InitDatabaseTests {
 	@Autowired
 	LoginTicketDAO loginTicketDAO;
 
+	@Autowired
+	CommentDAO commentDAO;
+
+//	@Autowired
+//	MessageDAO messageDAO;
+
 	@Test
 	public void initData() {
 		Random random = new Random();
@@ -57,6 +59,24 @@ public class InitDatabaseTests {
 			news.setLink(String.format("http://www.nowcoder.com/%d.html",i));
 			newsDAO.addNews(news);
 
+			//强制给每个人加3条评论
+			for(int j=0;j<2;++j){
+				Comment comment = new Comment();
+				comment.setUserId(i+1);
+				comment.setEntityId(news.getId());
+				comment.setEntityType(EntityType.ENTITY_NEWS);
+				comment.setStatus(0);
+				comment.setcreatedDate(new Date());
+				comment.setContent("Comment "+String.valueOf(j));
+				commentDAO.addComment(comment);
+			}
+
+//			Message msg = new Message();
+//			msg.setFromId(12);
+//			msg.setToId(2);
+//			msg.setContent("hello!");
+//			messageDAO.addMessage(msg);
+
 			user.setPassword("newpassword");
 			userDAO.updatePassword(user);
 
@@ -77,6 +97,8 @@ public class InitDatabaseTests {
 
 		Assert.assertEquals(1,loginTicketDAO.selectByTicket("TICKET1").getUserId());
 		Assert.assertEquals(2,loginTicketDAO.selectByTicket("TICKET1").getStatus());
+
+		Assert.assertNotNull(commentDAO.selectByEntity(1,EntityType.ENTITY_NEWS).get(0));
 	}
 
 }
