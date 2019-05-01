@@ -30,7 +30,7 @@ public class IndexController {
     @Autowired
     private ToutiaoService toutiaoService;
 
-    //设置主页，通过127.0.0:8080或127.0.0：8080/index均可访问
+    //设置主页，通过127.0.0：8080/index均可访问
     @RequestMapping(path = {"/index"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String index(HttpSession session) {

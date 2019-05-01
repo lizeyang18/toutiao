@@ -1,10 +1,7 @@
 package com.nowcoder.controller;
 
 import com.nowcoder.model.*;
-import com.nowcoder.service.CommentService;
-import com.nowcoder.service.NewsService;
-import com.nowcoder.service.QiniuService;
-import com.nowcoder.service.UserService;
+import com.nowcoder.service.*;
 import com.nowcoder.util.ToutiaoUtil;
 import jdk.nashorn.internal.ir.annotations.Reference;
 import org.slf4j.Logger;
@@ -49,11 +46,24 @@ public class NewsController {
     @Autowired
     CommentService commentService;
 
+    @Autowired
+    LikeService likeService;
+
     //咨询详情页
     @RequestMapping(path = {"/news/{newsId}"}, method = {RequestMethod.GET})
     public String newsDetail(@PathVariable("newsId") int newsId,Model model){
         News news = newsService.getById(newsId);
         if(news != null){
+
+            int localUserId = hostHolder.getUser() != null ? hostHolder.getUser().getId() : 0;
+            //！=0意味着是登录状态
+            if(localUserId != 0){
+                model.addAttribute("like",likeService.getLikeStatus(localUserId, EntityType.ENTITY_NEWS,news.getId()));
+            }
+            else{
+                model.addAttribute("like",0);
+            }
+
             //评论
             List<Comment> comments = commentService.getCommentByEntity(news.getId(), EntityType.ENTITY_NEWS);
             List<ViewObject> commentVOs = new ArrayList<>();

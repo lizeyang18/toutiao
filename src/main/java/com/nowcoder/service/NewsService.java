@@ -38,6 +38,9 @@ public class NewsService {
     public int updateCommentCount(int id,int count){
         return newsDAO.updateCommentCount(id,count);
     }
+    public int updateLikeCount(int id, int count) {
+        return newsDAO.updateLikeCount(id, count);
+    }
 
     //图片上传
     public String saveImage(MultipartFile file) throws IOException{
