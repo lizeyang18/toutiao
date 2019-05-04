@@ -1,5 +1,9 @@
 package com.nowcoder.controller;
 
+import antlr.debug.Event;
+import com.nowcoder.async.EventModel;
+import com.nowcoder.async.EventProducer;
+import com.nowcoder.async.EventType;
 import com.nowcoder.model.News;
 import com.nowcoder.model.ViewObject;
 import com.nowcoder.service.NewsService;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +35,10 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventProducer eventProducer;
+
 
     @RequestMapping(path = {"/reg/"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
@@ -71,14 +80,15 @@ public class LoginController {
                     cookie.setMaxAge(3600*24*5);
                 }
                 response.addCookie(cookie);
-                return ToutiaoUtil.getJSONString(0, "注册成功");
+
+                return ToutiaoUtil.getJSONString(0, "成功");
             } else {
                 return ToutiaoUtil.getJSONString(1, map);
             }
 
         } catch (Exception e) {
-            logger.error("注册异常" + e.getMessage());
-            return ToutiaoUtil.getJSONString(1, "注册异常");
+            logger.error("登录异常" + e.getMessage());
+            return ToutiaoUtil.getJSONString(1, "登录异常");
         }
     }
 
